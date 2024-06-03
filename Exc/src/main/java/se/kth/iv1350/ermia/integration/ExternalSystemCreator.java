@@ -22,6 +22,7 @@ public class ExternalSystemCreator {
     }
     /**
      * Returns the instance of <code>ExternalInventory</code>.
+     *
      * @return The external inventory system.
      */
     public ExternalInventory getInventory(){
@@ -30,6 +31,7 @@ public class ExternalSystemCreator {
     }
     /**
      * Returns the instance of <code>ExternalAccountingSystem</code>.
+     *
      * @return The external accounting system.
      */
     public ExternalAccountingSystem getAccountingSystem(){

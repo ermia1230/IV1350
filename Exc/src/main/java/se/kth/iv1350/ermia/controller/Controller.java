@@ -24,7 +24,8 @@ public class Controller {
     /**
      * The constructor of class <code>Controller</code>
      * This constructor sets the initial values of inventory, accountingSystem, printer and the register
-     * @param externalCreator of type <code>ExternalSystemCreator </code>  is the creator used to
+     *
+     * @param externalCreator of type <code>ExternalSystemCreator </code> is the creator used to
      * get references to the external systems in the system package.
      */
     public Controller(ExternalSystemCreator externalCreator){
@@ -43,8 +44,10 @@ public class Controller {
 
     /**
      * This method adds a new item to the current <code>Sale</code>
+     *
      * @param itemId is the identifier of the item to be added
      * @param quantity The quantity of the item to add
+     *
      * @return A <code>SaleDTO</code> which has all the info about the list of items, totalPrice, and total VAT amount.
      */
     public SaleDTO addItem(int itemId, int quantity) {

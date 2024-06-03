@@ -26,7 +26,9 @@ public class ExternalInventory {
     }
     /**
      * Fetches an item from the inventory based on the provided id of an item.
+     *
      * @param itemId The identifier of the item to be fetched.
+     *
      * @return An <code>ItemDTO</code> object containing the item details if found,
      *         or <code>null</code> if the item is not found. Note that in Semester 4,
      *         the <code>null</code> will be replaced with exception handling.

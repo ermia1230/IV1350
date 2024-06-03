@@ -18,10 +18,5 @@ public class View {
         saleDTO = cntr.addItem(102, 2);
         System.out.println(saleDTO);
 
-
-
-
-
-
     }
 }

@@ -7,5 +7,6 @@ public class Register {
     }
     public void registerPayment(double paidAmount){
         this.totalAmountInRegister += paidAmount;
+        System.out.println("The amount in register has increased with " + paidAmount + "\n");
     }
 }

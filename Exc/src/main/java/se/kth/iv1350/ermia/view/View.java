@@ -28,6 +28,7 @@ public class View {
     public void runSample(){
         Random random = new Random();
         cntr.startSale();
+        System.out.println("\n--------------------Start Of Sale-----------------------");
         int [] itemIds = {102, 101, 100};
         for(int itemId : itemIds){
             int randomQuantity = random.nextInt(3) + 1;

@@ -10,8 +10,11 @@ import se.kth.iv1350.ermia.integration.system.ExternalAccountingSystem;
 import se.kth.iv1350.ermia.integration.system.ExternalInventory;
 import se.kth.iv1350.ermia.integration.ExternalSystemCreator;
 import se.kth.iv1350.ermia.model.Item;
+import se.kth.iv1350.ermia.model.Payment;
+import se.kth.iv1350.ermia.model.Receipt;
 import se.kth.iv1350.ermia.model.Sale;
 import se.kth.iv1350.ermia.model.dto.ItemDTO;
+import se.kth.iv1350.ermia.model.dto.ReceiptDTO;
 import se.kth.iv1350.ermia.model.dto.SaleDTO;
 
 public class Controller {
@@ -57,10 +60,24 @@ public class Controller {
         return saleDTO;
     }
     public double pay(double paidAmount){
+        Payment payment = new Payment(paidAmount);
         register.registerPayment(paidAmount);
+        updatingExternalSystem();
+        double changedAmount = payment.calTheChangedAmount(currentSale.getTotalPrice());
+        handlePrintOfReceipt(paidAmount, changedAmount);
+        register.registerWithdrawal(changedAmount);
+        return changedAmount;
+    }
+    private void handlePrintOfReceipt(double paidAmount, double changedAmount) {
+        SaleDTO saleDTO = new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
+                currentSale.getTotalVATAmount());
+        ReceiptDTO receiptDTO = new ReceiptDTO(saleDTO, paidAmount, changedAmount);
+        Receipt receipt = new Receipt(receiptDTO);
+        printer.printingTheReceipt(receipt);
+    }
+    private void updatingExternalSystem(){
         inventory.updateInventory(currentSale.getItemList());
         accountingSystem.updateAccountingSystem(currentSale.getItemList());
-        return 2;
     }
     public Sale getCurrentSale(){
         return this.currentSale;

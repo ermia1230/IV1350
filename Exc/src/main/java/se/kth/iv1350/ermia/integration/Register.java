@@ -9,4 +9,8 @@ public class Register {
         this.totalAmountInRegister += paidAmount;
         System.out.println("The amount in register has increased with " + paidAmount + "\n");
     }
+    public void registerWithdrawal(double amountToBeReduced){
+        this.totalAmountInRegister -= amountToBeReduced;
+        System.out.println("The amount in register has decreased with " + amountToBeReduced + "\n");
+    }
 }

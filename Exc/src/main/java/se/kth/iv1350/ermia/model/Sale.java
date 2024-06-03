@@ -45,6 +45,9 @@ public class Sale {
     public List<Item> getItemList(){
         return this.itemList;
     }
+    public double getTotalVATAmount(){
+        return this.totalVATAmount;
+    }
 
     private void increaseQuantity(int itemId, int increasedQuantity) {
         for (int i = 0; i < itemList.size(); i++) {

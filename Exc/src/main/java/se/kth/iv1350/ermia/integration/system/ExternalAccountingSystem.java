@@ -11,6 +11,6 @@ import java.util.List;
 
 public class ExternalAccountingSystem {
     public void updateAccountingSystem(List<Item> itemList){
-        System.out.println("\nThe Information is sent to the Accounting System.");
+        System.out.println("The Information is sent to the Accounting System.");
     }
 }

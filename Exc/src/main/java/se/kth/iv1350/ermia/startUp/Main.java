@@ -12,7 +12,6 @@ import se.kth.iv1350.ermia.view.View;
 public class Main {
     /**
      * The main method, which starts the entire application.
-     *
      * @param args The arguments.
      */
     public static void main(String [] args){

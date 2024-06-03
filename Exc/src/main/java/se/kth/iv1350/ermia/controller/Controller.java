@@ -27,20 +27,11 @@ public class Controller {
     public void startSale(){
         this.currentSale = new Sale();
     }
-    public SaleDTO addItem(int itemId, int quantity){
-        boolean isItemInSale = currentSale.isItemInSale(itemId);
-        if(isItemInSale){
-            // Write code for 1.5
-            ItemDTO itemDTO = inventory.fetchItem(itemId);        
-            Item item = new Item(itemDTO,quantity);               
-            SaleDTO saleDTO = currentSale.addItem(item);          
-            return saleDTO;                                       
-        }else{
-            // Write code for 1.2, 1.3, and 1,4
-            ItemDTO itemDTO = inventory.fetchItem(itemId);
-            Item item = new Item(itemDTO,quantity);
-            SaleDTO saleDTO = currentSale.addItem(item);
-            return saleDTO;
-        }
+    public SaleDTO addItem(int itemId, int quantity) {
+
+        ItemDTO itemDTO = inventory.fetchItem(itemId);
+        Item item = new Item(itemDTO, quantity);
+        SaleDTO saleDTO = currentSale.addItem(item);
+        return saleDTO;
     }
 }

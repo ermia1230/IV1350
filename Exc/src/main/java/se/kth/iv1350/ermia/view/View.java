@@ -18,7 +18,7 @@ public class View {
             SaleDTO saleDTO = cntr.addItem(i, randomQuantity);
         }
         SaleDTO saleDTO = cntr.addItem(101, 20);
-        
+
 
 
 

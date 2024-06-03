@@ -13,11 +13,11 @@ public class View {
     public void runSample(){
         Random random = new Random();
         cntr.startSale();
-        for(int i = 100; i < 101; i++){
-            int randomQuantity = random.nextInt(5);
-            SaleDTO saleDTO = cntr.addItem(i, randomQuantity);
-        }
-        SaleDTO saleDTO = cntr.addItem(101, 20);
+        SaleDTO saleDTO = cntr.addItem(101, 3);
+        saleDTO = cntr.addItem(101, 4);
+        saleDTO = cntr.addItem(102, 2);
+        System.out.println(saleDTO);
+
 
 
 

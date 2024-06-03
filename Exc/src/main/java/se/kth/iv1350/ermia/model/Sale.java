@@ -12,14 +12,6 @@ public class Sale {
     public Sale(){
         this.itemList = new ArrayList<>();
     }
-    private boolean isItemInSale(int itemId){
-        for(Item item: itemList){
-            if(item.getItemDTO().itemId() == itemId){
-                return true;
-            }
-        }
-        return false;
-    }
     public SaleDTO addItem(Item item) {
         if (isItemInSale(getItemID(item))) {
             increaseQuantity(getItemID(item), item.getIQuantity());
@@ -31,7 +23,7 @@ public class Sale {
         return new SaleDTO(this.itemList, this.totalPrice, this.totalVATAmount);
     }
 
-    public void increaseQuantity(int itemId, int increasedQuantity) {
+    private void increaseQuantity(int itemId, int increasedQuantity) {
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
             if (getItemID(item) == itemId) {
@@ -44,6 +36,14 @@ public class Sale {
                 break;
             }
         }
+    }
+    private boolean isItemInSale(int itemId){
+        for(Item item: itemList){
+            if(item.getItemDTO().itemId() == itemId){
+                return true;
+            }
+        }
+        return false;
     }
     private int getItemID(Item item){
         return item.getItemDTO().itemId();

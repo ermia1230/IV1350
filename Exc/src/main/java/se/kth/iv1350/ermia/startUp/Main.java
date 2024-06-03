@@ -10,6 +10,6 @@ public class Main {
         Controller contr = new Controller(externalCreator);
         View view = new View(contr);
         view.runSample();
-        
+
     }
 }

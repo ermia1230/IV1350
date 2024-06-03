@@ -56,4 +56,11 @@ public class Controller {
         SaleDTO saleDTO = currentSale.addItem(item);
         return saleDTO;
     }
+    public double pay(double paidAmount){
+        return 2;
+    }
+    public Sale getCurrentSale(){
+        return this.currentSale;
+    }
+
 }

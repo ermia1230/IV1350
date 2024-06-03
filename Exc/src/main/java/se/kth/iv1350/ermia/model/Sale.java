@@ -35,9 +35,12 @@ public class Sale {
         } else {
             itemList.add(item);
             this.totalPrice += calcItemTotalPrice(item);
-            this.totalVATAmount += calcItemTotalVAT(item, calcItemTotalPrice(item));
+            this.totalVATAmount += calcItemTotalVAT(item);
         }
         return new SaleDTO(this.itemList, this.totalPrice, this.totalVATAmount);
+    }
+    public double getTotalPrice(){
+        return this.totalPrice;
     }
 
     private void increaseQuantity(int itemId, int increasedQuantity) {
@@ -48,8 +51,7 @@ public class Sale {
                 Item updatedItem = new Item(item.getItemDTO(), newQuantity);
                 itemList.set(i, updatedItem);
                 this.totalPrice += calcItemTotalPrice(updatedItem) - calcItemTotalPrice(item);
-                this.totalVATAmount += calcItemTotalVAT(updatedItem, calcItemTotalPrice(updatedItem)) -
-                        calcItemTotalVAT(item, calcItemTotalPrice(item));
+                this.totalVATAmount += calcItemTotalVAT(updatedItem) - calcItemTotalVAT(item);
                 break;
             }
         }
@@ -68,7 +70,10 @@ public class Sale {
     private double calcItemTotalPrice(Item item){
         return item.getItemDTO().price() * item.getIQuantity();
     }
-    private double calcItemTotalVAT(Item item, double itemTotalPrice){
-        return itemTotalPrice * item.getItemDTO().vatRate();
+    private double calcItemTotalVAT(Item item) {
+        double itemTotalPrice = calcItemTotalPrice(item);
+        double vatRate = item.getItemDTO().vatRate();
+        double netPrice = itemTotalPrice / (1 + vatRate); // Calculate net price without VAT
+        return itemTotalPrice - netPrice; // Calculate VAT amount
     }
 }

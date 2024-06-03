@@ -6,6 +6,7 @@
 package se.kth.iv1350.ermia.integration.system;
 import se.kth.iv1350.ermia.model.Item;
 import se.kth.iv1350.ermia.model.dto.ItemDTO;
+import se.kth.iv1350.ermia.model.dto.SaleDTO;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -42,5 +43,28 @@ public class ExternalInventory {
             }
         }
         return null;
+    }
+
+    /**
+     * Note that the system.out.print will be removed later on in sem 4 to exception handling
+     * @param saleInfo
+     */
+    public void updateInventory(List<Item> saleInfo) {
+        for (Item soldItem : saleInfo) {
+            for (Item inventoryItem : inventory) {
+                if (inventoryItem.getItemDTO().itemId() == soldItem.getItemDTO().itemId()) {
+                    int newQuantity = inventoryItem.getItemQuantity() - soldItem.getItemQuantity();
+                    if (newQuantity > 0) {
+                        inventoryItem.setIQuantity(newQuantity);
+                    } else {
+                        inventoryItem.setIQuantity(0);
+                        System.out.println("Warning: Item " + inventoryItem.getItemDTO().name() + " is out of stock.");
+                    }
+                    System.out.println("The quantity of Item with id " + soldItem.getItemDTO().itemId() +
+                            " in inventory has been decreased by " + soldItem.getItemQuantity());
+                }
+            }
+        }
+        System.out.println("\n" + "The inventory has been updated successfully");
     }
 }

@@ -16,7 +16,6 @@ public class View {
     private Controller cntr;
     /**
      * The constructor which creates a new instance of <code>View</code>.
-     *
      * @param cntr The controller that is used for handling user interactions.
      */
     public View(Controller cntr){
@@ -36,11 +35,9 @@ public class View {
         }
         System.out.println("\n--------------------End of Scanning-----------------------");
         System.out.println("The total amount to be paid is " + getTheTotal() + "kr");
-        double returnedChanged = cntr.pay(150);
         System.out.println("Cashier receives  150 kr form the customer");
+        double returnedChanged = cntr.pay(150);
         System.out.println("Returned change: " + roundToTwoDecimals(returnedChanged) + " SEK");
-
-
     }
     private double getTheTotal(){
         return roundToTwoDecimals(cntr.getCurrentSale().getTotalPrice());

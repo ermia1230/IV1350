@@ -34,7 +34,10 @@ public class Item {
      *
      * @return The quantity of the item.
      */
-    public int getIQuantity(){
+    public int getItemQuantity(){
         return this.quantity;
+    }
+    public void setIQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

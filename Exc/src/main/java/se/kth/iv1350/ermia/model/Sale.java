@@ -31,7 +31,7 @@ public class Sale {
      */
     public SaleDTO addItem(Item item) {
         if (isItemInSale(getItemID(item))) {
-            increaseQuantity(getItemID(item), item.getIQuantity());
+            increaseQuantity(getItemID(item), item.getItemQuantity());
         } else {
             itemList.add(item);
             this.totalPrice += calcItemTotalPrice(item);
@@ -42,12 +42,15 @@ public class Sale {
     public double getTotalPrice(){
         return this.totalPrice;
     }
+    public List<Item> getItemList(){
+        return this.itemList;
+    }
 
     private void increaseQuantity(int itemId, int increasedQuantity) {
         for (int i = 0; i < itemList.size(); i++) {
             Item item = itemList.get(i);
             if (getItemID(item) == itemId) {
-                int newQuantity = item.getIQuantity() + increasedQuantity;
+                int newQuantity = item.getItemQuantity() + increasedQuantity;
                 Item updatedItem = new Item(item.getItemDTO(), newQuantity);
                 itemList.set(i, updatedItem);
                 this.totalPrice += calcItemTotalPrice(updatedItem) - calcItemTotalPrice(item);
@@ -68,7 +71,7 @@ public class Sale {
         return item.getItemDTO().itemId();
     }
     private double calcItemTotalPrice(Item item){
-        return item.getItemDTO().price() * item.getIQuantity();
+        return item.getItemDTO().price() * item.getItemQuantity();
     }
     private double calcItemTotalVAT(Item item) {
         double itemTotalPrice = calcItemTotalPrice(item);

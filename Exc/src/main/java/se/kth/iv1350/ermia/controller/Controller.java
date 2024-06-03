@@ -57,6 +57,8 @@ public class Controller {
         return saleDTO;
     }
     public double pay(double paidAmount){
+        register.registerPayment(paidAmount);
+        inventory.updateInventory(currentSale.getItemList());
         return 2;
     }
     public Sale getCurrentSale(){

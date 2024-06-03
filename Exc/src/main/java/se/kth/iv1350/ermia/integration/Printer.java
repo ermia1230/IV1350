@@ -7,26 +7,24 @@ import java.time.format.DateTimeFormatter;
 
 public class Printer {
     public void printingTheReceipt(Receipt receipt) {
-        String formattedReceipt = formatReceipt(receipt);
-        System.out.println(formattedReceipt);
+        System.out.println("\n--------------------Receipt-----------------------\n");
+        String receiptToPrint = generateReceipt(receipt);
+        System.out.println(receiptToPrint);
+        System.out.println("\n--------------------End Of Receipt-----------------------\n");
     }
 
-    private String formatReceipt(Receipt receipt) {
+    private String generateReceipt(Receipt receipt) {
         StringBuilder receiptBuilder = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        appendHeader(receiptBuilder, receipt.getSaleTime().format(formatter));
+        appendTime(receiptBuilder, receipt.getSaleTime().format(formatter));
         appendItems(receiptBuilder, receipt);
         appendTotal(receiptBuilder, receipt);
         appendPaymentDetails(receiptBuilder, receipt);
-        appendFooter(receiptBuilder);
-
         return receiptBuilder.toString();
     }
 
-    private void appendHeader(StringBuilder receiptBuilder, String saleTime) {
-        receiptBuilder.append("\n--------------------Receipt-----------------------\n")
-                .append("Sale Time: ").append(saleTime).append("\n")
+    private void appendTime(StringBuilder receiptBuilder, String saleTime) {
+        receiptBuilder.append("Sale Time: ").append(saleTime).append("\n")
                 .append("---------------------------------------------------\n");
     }
 
@@ -55,9 +53,5 @@ public class Printer {
                 .append(String.format("%-20s : %.2f SEK\n", "Amount Paid", receipt.getReceiptInfo().amountPaid()))
                 .append(String.format("%-20s : %.2f SEK\n", "Changed Amount", receipt.getReceiptInfo().changedAmount()))
                 .append("---------------------------------------------------\n");
-    }
-
-    private void appendFooter(StringBuilder receiptBuilder) {
-        receiptBuilder.append("\n--------------------End Of Receipt-----------------------\n");
     }
 }

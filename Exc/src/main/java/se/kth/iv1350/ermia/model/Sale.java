@@ -76,7 +76,7 @@ public class Sale {
     private double calcItemTotalVAT(Item item) {
         double itemTotalPrice = calcItemTotalPrice(item);
         double vatRate = item.getItemDTO().vatRate();
-        double netPrice = itemTotalPrice / (1 + vatRate); // Calculate net price without VAT
-        return itemTotalPrice - netPrice; // Calculate VAT amount
+        double netPrice = itemTotalPrice / (1 + vatRate);
+        return itemTotalPrice - netPrice;
     }
 }

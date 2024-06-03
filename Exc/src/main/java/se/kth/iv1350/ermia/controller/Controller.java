@@ -59,10 +59,10 @@ public class Controller {
     public double pay(double paidAmount){
         register.registerPayment(paidAmount);
         inventory.updateInventory(currentSale.getItemList());
+        accountingSystem.updateAccountingSystem(currentSale.getItemList());
         return 2;
     }
     public Sale getCurrentSale(){
         return this.currentSale;
     }
-
 }

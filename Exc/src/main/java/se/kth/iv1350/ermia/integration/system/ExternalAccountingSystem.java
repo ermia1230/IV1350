@@ -4,5 +4,13 @@
  */
 package se.kth.iv1350.ermia.integration.system;
 
+import se.kth.iv1350.ermia.model.Item;
+import se.kth.iv1350.ermia.model.dto.SaleDTO;
+
+import java.util.List;
+
 public class ExternalAccountingSystem {
+    public void updateAccountingSystem(List<Item> itemList){
+        System.out.println("\nThe Information is sent to the Accounting System.");
+    }
 }

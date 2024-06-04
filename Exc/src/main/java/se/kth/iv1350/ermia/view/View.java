@@ -37,7 +37,7 @@ public class View {
         System.out.println("\n--------------------End of Scanning-----------------------");
         System.out.println("The total amount to be paid is " + getTheTotal() + "kr");
         System.out.println("Cashier receives  150 kr form the customer\n");
-        double returnedChanged = cntr.pay(150);
+        double returnedChanged = cntr.handlePay(150);
         System.out.println("Returned change: " + roundToTwoDecimals(returnedChanged) + " SEK");
         cntr.endSale();
     }

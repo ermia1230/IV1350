@@ -46,11 +46,11 @@ public class ExternalInventory {
     }
 
     /**
-     * Note that the system.out.print will be removed later on in sem 4 to exception handling
-     * @param saleInfo
+     * This method is used to update the inventory system.
+     * @param itemsInSale List of all items in <code>Sale</code> of type <code>List<Item></code>
      */
-    public void updateInventory(List<Item> saleInfo) {
-        for (Item soldItem : saleInfo) {
+    public void updateInventory(List<Item> itemsInSale) {
+        for (Item soldItem : itemsInSale) {
             for (Item inventoryItem : inventory) {
                 if (inventoryItem.getItemDTO().itemId() == soldItem.getItemDTO().itemId()) {
                     int newQuantity = inventoryItem.getItemQuantity() - soldItem.getItemQuantity();

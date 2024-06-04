@@ -24,7 +24,7 @@ public class Controller {
 
     /**
      * The constructor of class <code>Controller</code>
-     * This constructor sets the initial values of inventory, accountingSystem, printer and the register
+     * This constructor sets the initial values of inventory, accountingSystem, printer, register and the SaleLog
      *
      * @param externalCreator of type <code>ExternalSystemCreator </code> is the creator used to
      * get references to the external systems in the system package.
@@ -58,7 +58,15 @@ public class Controller {
         SaleDTO saleDTO = currentSale.addItem(item);
         return saleDTO;
     }
-    public double pay(double paidAmount){
+
+    /**
+     * This methods takes care of the payment. It starts off with creating a <code>Payment</code> with the paid
+     * amount by customer. It then increases the register by paid amount and update all the inventory system. The
+     * method handles the printing of receipt and calculating the changed amount.
+     * @param paidAmount is the amount that customer pays
+     * @return A <code>double</code> which is the changed amount which should be given back to the customer
+     */
+    public double handlePay(double paidAmount){
         Payment payment = new Payment(paidAmount);
         register.registerPayment(paidAmount);
         updatingExternalSystem();
@@ -67,23 +75,38 @@ public class Controller {
         register.registerWithdrawal(changedAmount);
         return changedAmount;
     }
+
+    /**
+     * This method takes care of ending the entire sale. It will first save the in the <code>SaleLog</code>
+     * and then it makes the currentSale equal to <code>null</code>
+     */
     public void endSale(){
         saleLog.addSale(new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
                 currentSale.getTotalVATAmount()));
         this.currentSale = null;
     }
+
+    /**
+     * This methods is a getter for the currentSale.
+     * @return A <code>Sale</code> which is the currentSale will be returned.
+     */
+    public Sale getCurrentSale(){
+        return this.currentSale;
+    }
     private void handlePrintOfReceipt(double paidAmount, double changedAmount) {
-        SaleDTO saleDTO = new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
-                currentSale.getTotalVATAmount());
+        SaleDTO saleDTO = generateSaleDTOForCurrentSale();
         ReceiptDTO receiptDTO = new ReceiptDTO(saleDTO, paidAmount, changedAmount);
         Receipt receipt = new Receipt(receiptDTO);
         printer.printingTheReceipt(receipt);
     }
     private void updatingExternalSystem(){
         inventory.updateInventory(currentSale.getItemList());
-        accountingSystem.updateAccountingSystem(currentSale.getItemList());
+        SaleDTO saleDTO = generateSaleDTOForCurrentSale();
+        accountingSystem.updateAccountingSystem(saleDTO);
     }
-    public Sale getCurrentSale(){
-        return this.currentSale;
+    private SaleDTO generateSaleDTOForCurrentSale(){
+        return new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
+                currentSale.getTotalVATAmount());
     }
+
 }

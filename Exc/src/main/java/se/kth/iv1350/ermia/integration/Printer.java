@@ -1,3 +1,7 @@
+/**
+ * This class represents the <code>Printer</code> in the application. The class will print the receipt at the end
+ * of the sale transaction.
+ */
 package se.kth.iv1350.ermia.integration;
 
 import se.kth.iv1350.ermia.model.Item;
@@ -6,6 +10,12 @@ import se.kth.iv1350.ermia.model.Receipt;
 import java.time.format.DateTimeFormatter;
 
 public class Printer {
+    /**
+     * This method starts of by printing a line for the <code>Receipt</code> and then it generates the
+     * <code>String</code> of receipt by calling on the method generateReceipt, and then it will print the
+     * string created. It will then print End of the receipt.
+     * @param receipt is the receipt which should be printed
+     */
     public void printingTheReceipt(Receipt receipt) {
         System.out.println("\n--------------------Receipt-----------------------\n");
         String receiptToPrint = generateReceipt(receipt);

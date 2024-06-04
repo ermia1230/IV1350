@@ -39,6 +39,7 @@ public class View {
         System.out.println("Cashier receives  150 kr form the customer\n");
         double returnedChanged = cntr.pay(150);
         System.out.println("Returned change: " + roundToTwoDecimals(returnedChanged) + " SEK");
+        cntr.endSale();
     }
     private double getTheTotal(){
         return roundToTwoDecimals(cntr.getCurrentSale().getTotalPrice());

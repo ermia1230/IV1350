@@ -9,10 +9,7 @@ import se.kth.iv1350.ermia.integration.Register;
 import se.kth.iv1350.ermia.integration.system.ExternalAccountingSystem;
 import se.kth.iv1350.ermia.integration.system.ExternalInventory;
 import se.kth.iv1350.ermia.integration.ExternalSystemCreator;
-import se.kth.iv1350.ermia.model.Item;
-import se.kth.iv1350.ermia.model.Payment;
-import se.kth.iv1350.ermia.model.Receipt;
-import se.kth.iv1350.ermia.model.Sale;
+import se.kth.iv1350.ermia.model.*;
 import se.kth.iv1350.ermia.model.dto.ItemDTO;
 import se.kth.iv1350.ermia.model.dto.ReceiptDTO;
 import se.kth.iv1350.ermia.model.dto.SaleDTO;
@@ -23,6 +20,7 @@ public class Controller {
     private Printer printer;
     private Register register;
     private Sale currentSale;
+    private SaleLog saleLog;
 
     /**
      * The constructor of class <code>Controller</code>
@@ -36,6 +34,7 @@ public class Controller {
         this.accountingSystem = externalCreator.getAccountingSystem();
         this.printer = new Printer();
         this.register = new Register();
+        this.saleLog = new SaleLog();
     }
 
     /**
@@ -67,6 +66,11 @@ public class Controller {
         handlePrintOfReceipt(paidAmount, changedAmount);
         register.registerWithdrawal(changedAmount);
         return changedAmount;
+    }
+    public void endSale(){
+        saleLog.addSale(new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
+                currentSale.getTotalVATAmount()));
+        this.currentSale = null;
     }
     private void handlePrintOfReceipt(double paidAmount, double changedAmount) {
         SaleDTO saleDTO = new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),

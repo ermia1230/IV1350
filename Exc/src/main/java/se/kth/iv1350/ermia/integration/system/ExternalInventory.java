@@ -67,4 +67,13 @@ public class ExternalInventory {
         }
         System.out.println("\n" + "The inventory has been updated successfully");
     }
+
+    /**
+     * This will return the list of items in inventory
+     * @return the list of items in inventory will be returned
+     */
+    public List<Item> getInventory(){
+        return this.inventory;
+    }
+
 }

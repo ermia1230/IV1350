@@ -24,7 +24,7 @@ class SaleLogTest {
     }
 
     @Test
-    void testAddSale() {
+    void addSale() {
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item(new ItemDTO(100, 0.25, "Milk",
                 "A carton of milk weighing 1.5 kg", 15), 2));

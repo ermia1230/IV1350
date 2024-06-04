@@ -61,7 +61,7 @@ public class ExternalInventory {
                         System.out.println("Warning: Item " + inventoryItem.getItemDTO().name() + " is out of stock.");
                     }
                     System.out.println("The quantity of Item with id " + soldItem.getItemDTO().itemId() +
-                            " in inventory has been decreased by " + soldItem.getItemQuantity());
+                            " in inventory decreased by " + soldItem.getItemQuantity());
                 }
             }
         }

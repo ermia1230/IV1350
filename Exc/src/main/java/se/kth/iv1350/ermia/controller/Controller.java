@@ -29,7 +29,7 @@ public class Controller {
      * @param externalCreator of type <code>ExternalSystemCreator </code> is the creator used to
      * get references to the external systems in the system package.
      */
-    public Controller(a externalCreator){
+    public Controller(ExternalSystemCreator externalCreator){
         this.inventory = externalCreator.getInventory();
         this.accountingSystem = externalCreator.getAccountingSystem();
         this.printer = new Printer();

@@ -1,6 +1,6 @@
 /**
  * The class <code>Controller</code> is managing all the interaction between <code>View</code>
- * and all other parts of application with each other, parts such as, view, model and integration layers.
+ * and all other parts of application with each other, parts such as, model and integration layers.
  */
 package se.kth.iv1350.ermia.controller;
 
@@ -29,7 +29,7 @@ public class Controller {
      * @param externalCreator of type <code>ExternalSystemCreator </code> is the creator used to
      * get references to the external systems in the system package.
      */
-    public Controller(ExternalSystemCreator externalCreator){
+    public Controller(a externalCreator){
         this.inventory = externalCreator.getInventory();
         this.accountingSystem = externalCreator.getAccountingSystem();
         this.printer = new Printer();

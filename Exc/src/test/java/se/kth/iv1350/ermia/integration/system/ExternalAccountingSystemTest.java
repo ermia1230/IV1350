@@ -28,7 +28,7 @@ class ExternalAccountingSystemTest {
         accountingSystem = null;
     }
     @Test
-    void testUpdateAccountingSystem() {
+    void updateAccountingSystem() {
         assertDoesNotThrow(() -> accountingSystem.updateAccountingSystem(saleDTO),
                 "The method updateAccountingSystem should not throw any exception");
     }

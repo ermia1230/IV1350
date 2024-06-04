@@ -18,9 +18,13 @@ class ExternalInventoryTest {
     void setUp() {
         externalInventory = new ExternalInventory();
     }
+    @AfterEach
+    void tearDown(){
+        externalInventory = null;
+    }
 
     @Test
-    void testFetchItemFound() {
+    void fetchItemFound() {
         int itemId = 100;
         ItemDTO itemDTO = externalInventory.fetchItem(itemId);
         assertNotNull(itemDTO, "Item should be found in the inventory");
@@ -29,14 +33,14 @@ class ExternalInventoryTest {
     }
 
     @Test
-    void testFetchItemNotFound() {
+    void fetchItemNotFound() {
         int nonExistentItemId = 999;
         ItemDTO itemDTO = externalInventory.fetchItem(nonExistentItemId);
         assertNull(itemDTO, "Item should not be found in the inventory");
     }
 
     @Test
-    void testUpdateInventory() {
+    void updateInventory() {
         List<Item> itemsInSale = new ArrayList<>();
         int quantity = 2;
         itemsInSale.add(new Item(new ItemDTO(100, 0.25, "Milk",

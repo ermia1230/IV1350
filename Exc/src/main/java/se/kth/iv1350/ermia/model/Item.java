@@ -37,6 +37,11 @@ public class Item {
     public int getItemQuantity(){
         return this.quantity;
     }
+
+    /**
+     * Sets the quantity of an item. In other words, it is used to change quantity of an item.
+     * @param quantity is an <code>integer</code> which is the new quantity of the item.
+     */
     public void setIQuantity(int quantity) {
         this.quantity = quantity;
     }

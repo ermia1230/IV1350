@@ -39,12 +39,26 @@ public class Sale {
         }
         return new SaleDTO(this.itemList, this.totalPrice, this.totalVATAmount);
     }
+
+    /**
+     * Getter for the total price of the <code>Sale</code>
+     * @return a <code>double</code> is returned which is the total price of the sale
+     */
     public double getTotalPrice(){
         return this.totalPrice;
     }
+    /**
+     * Getter for the lists of items in the <code>Sale</code>
+     * @return the list of items in the sale.
+     */
     public List<Item> getItemList(){
         return this.itemList;
     }
+
+    /**
+     * Getter for the total VAT of the <code>Sale</code>
+     * @return a <code>double</code> is returned which is the total VAT of the sale
+     */
     public double getTotalVATAmount(){
         return this.totalVATAmount;
     }

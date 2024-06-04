@@ -23,7 +23,7 @@ public class View {
     }
     /**
      * Runs a sample scenario of the application
-     * It adds items to a sale and displaying the sale details
+     * It adds items to a sale and displaying the sale details and then handles the payment and ending the sale.
      */
     public void runSample(){
         Random random = new Random();

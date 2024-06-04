@@ -30,8 +30,4 @@ class ControllerTest {
     @Test
     void endSale() {
     }
-
-    @Test
-    void getCurrentSale() {
-    }
 }

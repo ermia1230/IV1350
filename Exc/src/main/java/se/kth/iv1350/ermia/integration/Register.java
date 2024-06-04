@@ -33,4 +33,12 @@ public class Register {
         this.totalAmountInRegister -= amountToBeReduced;
         System.out.println("The amount in register has decreased with " + amountToBeReduced + "\n");
     }
+
+    /**
+     * The getter to get the total amount in the register
+     * @return A <code>double</code> returned which shows the money in register.
+     */
+    public double getTotalAmountInRegister(){
+        return this.totalAmountInRegister;
+    }
 }

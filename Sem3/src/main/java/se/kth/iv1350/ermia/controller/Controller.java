@@ -81,8 +81,7 @@ public class Controller {
      * and then it makes the currentSale equal to <code>null</code>
      */
     public void endSale(){
-        saleLog.addSale(new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
-                currentSale.getTotalVATAmount()));
+        saleLog.addSale(currentSale.getSaleInfo());
         this.currentSale = null;
     }
 
@@ -100,13 +99,11 @@ public class Controller {
         printer.printingTheReceipt(receipt);
     }
     private void updatingExternalSystem(){
-        inventory.updateInventory(currentSale.getItemList());
-        SaleDTO saleDTO = generateSaleDTOForCurrentSale();
-        accountingSystem.updateAccountingSystem(saleDTO);
+        inventory.updateInventory(currentSale.getSaleInfo().itemList());
+        accountingSystem.updateAccountingSystem(currentSale.getSaleInfo());
     }
     private SaleDTO generateSaleDTOForCurrentSale(){
-        return new SaleDTO(currentSale.getItemList(), currentSale.getTotalPrice(),
-                currentSale.getTotalVATAmount());
+        return currentSale.getSaleInfo();
     }
 
 }

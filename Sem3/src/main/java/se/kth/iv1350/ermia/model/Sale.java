@@ -47,13 +47,6 @@ public class Sale {
     public double getTotalPrice(){
         return this.totalPrice;
     }
-    /**
-     * Getter for the lists of items in the <code>Sale</code>
-     * @return the list of items in the sale.
-     */
-    public List<Item> getItemList(){
-        return this.itemList;
-    }
 
     /**
      * Getter for the total VAT of the <code>Sale</code>
@@ -61,6 +54,15 @@ public class Sale {
      */
     public double getTotalVATAmount(){
         return this.totalVATAmount;
+    }
+
+    /**
+     * Returns a DTO containing the current state of the sale.
+     *
+     * @return A <code>SaleDTO</code> containing the current sale information.
+     */
+    public SaleDTO getSaleInfo() {
+        return new SaleDTO(this.itemList, this.totalPrice, this.totalVATAmount);
     }
 
     private void increaseQuantity(int itemId, int increasedQuantity) {

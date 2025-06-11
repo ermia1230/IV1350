@@ -4,15 +4,21 @@
  */
 package se.kth.iv1350.ermia.controller;
 
+import se.kth.iv1350.ermia.integration.ExternalSystemCreator;
 import se.kth.iv1350.ermia.integration.Printer;
 import se.kth.iv1350.ermia.integration.Register;
+import se.kth.iv1350.ermia.integration.exception.DatabaseConException;
 import se.kth.iv1350.ermia.integration.system.ExternalAccountingSystem;
 import se.kth.iv1350.ermia.integration.system.ExternalInventory;
-import se.kth.iv1350.ermia.integration.ExternalSystemCreator;
-import se.kth.iv1350.ermia.model.*;
-import se.kth.iv1350.ermia.model.dto.ItemDTO;
+import se.kth.iv1350.ermia.model.Payment;
+import se.kth.iv1350.ermia.model.Receipt;
+import se.kth.iv1350.ermia.model.Sale;
+import se.kth.iv1350.ermia.model.SaleLog;
 import se.kth.iv1350.ermia.model.dto.ReceiptDTO;
 import se.kth.iv1350.ermia.model.dto.SaleDTO;
+import se.kth.iv1350.ermia.model.exception.ItemNotFoundException;
+import se.kth.iv1350.ermia.util.FileLogger;
+import se.kth.iv1350.ermia.util.Logger;
 
 public class Controller {
     private ExternalInventory inventory;
@@ -21,6 +27,7 @@ public class Controller {
     private Register register;
     private Sale currentSale;
     private SaleLog saleLog;
+    private Logger logger = new FileLogger();
 
     /**
      * The constructor of class <code>Controller</code>
@@ -41,22 +48,31 @@ public class Controller {
      * This method starts a new sale.
      */
     public void startSale(){
-        this.currentSale = new Sale();
+        this.currentSale = new Sale(this.inventory);
     }
 
-    /**
-     * This method adds a new item to the current <code>Sale</code>
-     *
-     * @param itemId is the identifier of the item to be added
-     * @param quantity The quantity of the item to add
-     *
-     * @return A <code>SaleDTO</code> which has all the info about the list of items, totalPrice, and total VAT amount.
-     */
-    public SaleDTO addItem(int itemId, int quantity) {
-        ItemDTO itemDTO = inventory.fetchItem(itemId);
-        Item item = new Item(itemDTO, quantity);
-        SaleDTO saleDTO = currentSale.addItem(item);
-        return saleDTO;
+   /**
+   * Attempts to add an item to the current sale using its ID and quantity. 
+   * Retrieves item details from the inventory system and updates the sale accordingly.
+   * Logs and rethrows any exceptions encountered during the process.
+   *
+   * @param itemId The unique ID of the item to be added
+   * @param quantity The number of units to add
+   * @return A SaleDTO containing the updated sale details
+   * @throws ItemNotFoundException If the item ID doesn't exist in the inventory
+   * @throws DatabaseConException If a database connection issue occurs
+   */
+
+    public SaleDTO addItem(int itemId, int quantity) throws ItemNotFoundException, DatabaseConException {
+        try {
+            return currentSale.addItemById(itemId, quantity);
+        } catch (ItemNotFoundException exception) {
+            logger.log("Failed to find item in inventory", exception);
+            throw exception; 
+        } catch (DatabaseConException exception) {
+            logger.log("Database connection failed", exception);
+            throw exception;
+        }
     }
 
     /**

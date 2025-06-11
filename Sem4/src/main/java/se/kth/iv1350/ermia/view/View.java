@@ -4,13 +4,15 @@
  */
 package se.kth.iv1350.ermia.view;
 
-import se.kth.iv1350.ermia.controller.Controller;
-import se.kth.iv1350.ermia.model.Item;
-import se.kth.iv1350.ermia.model.dto.SaleDTO;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
+
+import se.kth.iv1350.ermia.controller.Controller;
+import se.kth.iv1350.ermia.integration.exception.DatabaseConException;
+import se.kth.iv1350.ermia.model.Item;
+import se.kth.iv1350.ermia.model.dto.SaleDTO;
+import se.kth.iv1350.ermia.model.exception.ItemNotFoundException;
 
 public class View {
     private Controller cntr;
@@ -29,7 +31,7 @@ public class View {
         Random random = new Random();
         cntr.startSale();
         System.out.println("\n--------------------Start Of Sale-----------------------");
-        int [] itemIds = {102, 101, 100};
+        int [] itemIds = {999, 101, 100, 234};
         for(int itemId : itemIds){
             int randomQuantity = random.nextInt(3) + 1;
             addItemToSale(itemId, randomQuantity);
@@ -44,12 +46,33 @@ public class View {
     private double getTheTotal(){
         return roundToTwoDecimals(cntr.getCurrentSale().getTotalPrice());
     }
+
     private void addItemToSale(int itemId, int quantity) {
-        SaleDTO saleDTO = cntr.addItem(itemId, quantity);
-        System.out.println("\nAdded " + quantity + " item(s) with item id " + itemId + ":");
-        printItemDetails(saleDTO, itemId, quantity);
-        printTotalDetails(saleDTO);
+        System.out.printf("\nAdding item (ID: %d, Quantity: %d)...\n", itemId, quantity);
+        try {
+            SaleDTO saleInfo = cntr.addItem(itemId, quantity);
+            displaySaleInfo(saleInfo, itemId, quantity);
+        } catch (ItemNotFoundException exception) {
+            System.out.println("ERROR: The item with ID " + exception.getItemId() + " does not exist.");
+            System.out.println("Please check the item ID and try again.");
+        } catch (DatabaseConException exception) {
+            System.out.println("ERROR: The system is experiencing technical difficulties.");
+            System.out.println("Please try again later");
+        }
     }
+
+    private void displaySaleInfo(SaleDTO saleInfo, int itemId, int quantity) {
+        // Display information about the added item
+        System.out.println("Item added successfully.");
+        
+        // Display updated running total
+        System.out.printf("Running total: $%.2f (VAT: $%.2f)\n", 
+                         saleInfo.totalPrice(), saleInfo.totalVATAmount());
+        
+        // Could display more details about the sale if needed
+        System.out.printf("Items in cart: %d\n", saleInfo.itemList().size());
+    }
+
     private void printItemDetails(SaleDTO saleDTO, int itemId, int addedQuantity) {
         Item item = findItemInSale(saleDTO, itemId);
         if (item != null) {

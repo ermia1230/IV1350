@@ -4,12 +4,12 @@
  * managing the inventory of items and providing methods to fetch item details.
  */
 package se.kth.iv1350.ermia.integration.system;
+import java.util.ArrayList;
+import java.util.List;
+
+import se.kth.iv1350.ermia.integration.exception.DatabaseConException;
 import se.kth.iv1350.ermia.model.Item;
 import se.kth.iv1350.ermia.model.dto.ItemDTO;
-import se.kth.iv1350.ermia.model.dto.SaleDTO;
-
-import java.util.List;
-import java.util.ArrayList;
 public class ExternalInventory {
     private List<Item> inventory;
     /**
@@ -35,8 +35,12 @@ public class ExternalInventory {
      * @return An <code>ItemDTO</code> object containing the item details if found,
      *         or <code>null</code> if the item is not found. Note that in Semester 4,
      *         the <code>null</code> will be replaced with exception handling.
+     * @throws DatabaseConException if there is an issue connecting to the database (hardcoded for demonstration purposes).
      */
-    public ItemDTO fetchItem(int itemId){
+    public ItemDTO fetchItem(int itemId) throws DatabaseConException {
+        if (itemId == 999) {
+            throw new DatabaseConException();
+        }
         for(Item item : this.inventory){
             if(item.getItemDTO().itemId() == itemId){
                 return item.getItemDTO();

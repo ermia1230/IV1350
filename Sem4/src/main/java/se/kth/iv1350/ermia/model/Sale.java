@@ -5,31 +5,55 @@
  */
 package se.kth.iv1350.ermia.model;
 
-import se.kth.iv1350.ermia.model.dto.SaleDTO;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import se.kth.iv1350.ermia.integration.exception.DatabaseConException;
+import se.kth.iv1350.ermia.integration.system.ExternalInventory;
+import se.kth.iv1350.ermia.model.dto.ItemDTO;
+import se.kth.iv1350.ermia.model.dto.SaleDTO;
+import se.kth.iv1350.ermia.model.exception.ItemNotFoundException;
 
 public class Sale {
     private double totalPrice;
     private double totalVATAmount;
     private List<Item> itemList;
+    private ExternalInventory inventory;
+
     /**
-     * It is a constructor Creates a new instance of <code>Sale</code> with an empty list of items.
-     */
-    public Sale(){
-        this.itemList = new ArrayList<>();
+    * Creates a new instance of <code>Sale</code> with an empty list of items and 
+    * a reference to the external inventory system. This constructor allows the 
+    * Sale object to look up item information directly.
+    *
+    * @param inventory The external inventory system that will be used to fetch 
+    *                  item information when needed.
+    */
+    public Sale(ExternalInventory inventory) {
+    this.itemList = new ArrayList<>();
+    this.inventory = inventory;
     }
     /**
-     * This method is used to add an item to the sale.
-     * If the item is already in the sale, its quantity is increased.
-     * Otherwise, the item will be added ot the list of sale.
-     * The total price and total VAT amount are updated accordingly.
-     *
-     * @param item The item to be added to the sale.
-     * @return A <code>SaleDTO</code> object containing the current state of the sale.
-     */
-    public SaleDTO addItem(Item item) {
+    * Adds an item to the sale using its item ID.
+    *
+    * @param itemId The ID of the item to add.
+    * @param quantity The quantity of the item to add.
+    * @return A SaleDTO containing the current state of the sale.
+    * @throws ItemNotFoundException If the item with the specified ID doesn't exist.
+    * @throws DatabaseConException If there's a database connection error.
+    */
+    public SaleDTO addItemById(int itemId, int quantity) throws ItemNotFoundException, DatabaseConException {
+        ItemDTO itemDTO = inventory.fetchItem(itemId);
+    
+        if (itemDTO == null) {
+            throw new ItemNotFoundException(itemId);
+        }
+        
+        Item newItem = new Item(itemDTO, quantity);
+        
+        return addItem(newItem);
+    } 
+   
+    private SaleDTO addItem(Item item) {
         if (isItemInSale(getItemID(item))) {
             increaseQuantity(getItemID(item), item.getItemQuantity());
         } else {

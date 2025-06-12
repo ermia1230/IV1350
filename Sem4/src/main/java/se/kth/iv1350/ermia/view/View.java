@@ -28,21 +28,57 @@ public class View {
      * It adds items to a sale and displaying the sale details and then handles the payment and ending the sale.
      */
     public void runSample(){
+        runMultipleSales();
+    }
+   
+    private void runMultipleSales() {
+        System.out.println("\n=================== SALE 1 ===================");
+        runFirstSale();
+        
+        System.out.println("\n\n=================== SALE 2 ===================");
+        runSecondSale();
+    }
+    
+
+    private void runFirstSale() {
         Random random = new Random();
         cntr.startSale();
         System.out.println("\n--------------------Start Of Sale-----------------------");
-        int [] itemIds = {999, 101, 100, 234};
-        for(int itemId : itemIds){
+        int[] itemIds = {999, 101, 100, 234};
+        for (int itemId : itemIds) {
             int randomQuantity = random.nextInt(3) + 1;
             addItemToSale(itemId, randomQuantity);
         }
         System.out.println("\n--------------------End of Scanning-----------------------");
         System.out.println("The total amount to be paid is " + getTheTotal() + "kr");
-        System.out.println("Cashier receives  150 kr form the customer\n");
-        double returnedChanged = cntr.handlePay(150);
-        System.out.println("Returned change: " + roundToTwoDecimals(returnedChanged) + " SEK");
+        System.out.println("Cashier receives 150 kr from the customer\n");
+        double returnedChange = cntr.handlePay(150);
+        System.out.println("Returned change: " + roundToTwoDecimals(returnedChange) + " SEK");
         cntr.endSale();
     }
+    
+    private void runSecondSale() {
+        cntr.startSale();
+        System.out.println("\n--------------------Start Of Sale-----------------------");
+       
+        int[][] itemsWithQuantities = {
+            {100, 2}, 
+            {101, 1}, 
+            {555, 3}  
+        };
+        
+        for (int[] item : itemsWithQuantities) {
+            addItemToSale(item[0], item[1]);
+        }
+        
+        System.out.println("\n--------------------End of Scanning-----------------------");
+        System.out.println("The total amount to be paid is " + getTheTotal() + "kr");
+        System.out.println("Cashier receives 200 kr from the customer\n");
+        double returnedChange = cntr.handlePay(200);
+        System.out.println("Returned change: " + roundToTwoDecimals(returnedChange) + " SEK");
+        cntr.endSale();
+    }
+
     private double getTheTotal(){
         return roundToTwoDecimals(cntr.getCurrentSale().getTotalPrice());
     }

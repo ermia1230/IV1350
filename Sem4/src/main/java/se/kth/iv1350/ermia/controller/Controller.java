@@ -12,6 +12,7 @@ import se.kth.iv1350.ermia.integration.system.ExternalAccountingSystem;
 import se.kth.iv1350.ermia.integration.system.ExternalInventory;
 import se.kth.iv1350.ermia.model.Payment;
 import se.kth.iv1350.ermia.model.Receipt;
+import se.kth.iv1350.ermia.model.RevenueObserver;
 import se.kth.iv1350.ermia.model.Sale;
 import se.kth.iv1350.ermia.model.SaleLog;
 import se.kth.iv1350.ermia.model.dto.ReceiptDTO;
@@ -121,5 +122,12 @@ public class Controller {
     private SaleDTO generateSaleDTOForCurrentSale(){
         return currentSale.getSaleInfo();
     }
-
+    /**
+     * Registers an observer to be notified of revenue changes.
+     * 
+     * @param observer The observer to register.
+     */
+    public void addRevenueObserver(RevenueObserver observer) {
+        saleLog.addObserver(observer);
+    }
 }

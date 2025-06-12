@@ -13,6 +13,7 @@ import se.kth.iv1350.ermia.integration.exception.DatabaseConException;
 import se.kth.iv1350.ermia.model.Item;
 import se.kth.iv1350.ermia.model.dto.SaleDTO;
 import se.kth.iv1350.ermia.model.exception.ItemNotFoundException;
+import se.kth.iv1350.ermia.util.TotalRevenueFile;
 
 public class View {
     private Controller cntr;
@@ -22,6 +23,10 @@ public class View {
      */
     public View(Controller cntr){
         this.cntr = cntr;
+        TotalRevenueView revenueView = new TotalRevenueView();
+        TotalRevenueFile revenueFileOutput = new TotalRevenueFile();
+        cntr.addRevenueObserver(revenueView);
+        cntr.addRevenueObserver(revenueFileOutput);
     }
     /**
      * Runs a sample scenario of the application

@@ -7,8 +7,6 @@ package se.kth.iv1350.ermia.startUp;
 
 import se.kth.iv1350.ermia.controller.Controller;
 import se.kth.iv1350.ermia.integration.ExternalSystemCreator;
-import se.kth.iv1350.ermia.util.TotalRevenueFile;
-import se.kth.iv1350.ermia.view.TotalRevenueView;
 import se.kth.iv1350.ermia.view.View;
 
 public class Main {
@@ -19,11 +17,6 @@ public class Main {
     public static void main(String [] args){
         ExternalSystemCreator externalCreator = new ExternalSystemCreator();
         Controller contr = new Controller(externalCreator);
-        
-        TotalRevenueView revenueView = new TotalRevenueView();
-        TotalRevenueFile revenueFileOutput = new TotalRevenueFile();
-        contr.addRevenueObserver(revenueView);
-        contr.addRevenueObserver(revenueFileOutput);
         
         View view = new View(contr);
         view.runSample();

@@ -310,3 +310,55 @@ org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:280)
 java.base/java.lang.Thread.run(Thread.java:1447)
  
 --------------------------------------------------
+ 
+[2025-06-12 16:25:58] Database connection failed
+Exception: Could not connect to inventory database
+Stacktrace:
+se.kth.iv1350.ermia.integration.system.ExternalInventory.fetchItem(ExternalInventory.java:42)
+se.kth.iv1350.ermia.model.Sale.addItemById(Sale.java:45)
+se.kth.iv1350.ermia.controller.Controller.addItem(Controller.java:69)
+se.kth.iv1350.ermia.view.View.addItemToSale(View.java:89)
+se.kth.iv1350.ermia.view.View.runFirstSale(View.java:50)
+se.kth.iv1350.ermia.view.View.runMultipleSales(View.java:36)
+se.kth.iv1350.ermia.view.View.runSample(View.java:31)
+se.kth.iv1350.ermia.startUp.Main.main(Main.java:29)
+org.codehaus.mojo.exec.ExecJavaMojo.doMain(ExecJavaMojo.java:371)
+org.codehaus.mojo.exec.ExecJavaMojo.doExec(ExecJavaMojo.java:360)
+org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:280)
+java.base/java.lang.Thread.run(Thread.java:1447)
+ 
+--------------------------------------------------
+ 
+[2025-06-12 16:25:58] Failed to find item in inventory
+Exception: Could not find item with ID: 234
+Stacktrace:
+se.kth.iv1350.ermia.model.Sale.addItemById(Sale.java:48)
+se.kth.iv1350.ermia.controller.Controller.addItem(Controller.java:69)
+se.kth.iv1350.ermia.view.View.addItemToSale(View.java:89)
+se.kth.iv1350.ermia.view.View.runFirstSale(View.java:50)
+se.kth.iv1350.ermia.view.View.runMultipleSales(View.java:36)
+se.kth.iv1350.ermia.view.View.runSample(View.java:31)
+se.kth.iv1350.ermia.startUp.Main.main(Main.java:29)
+org.codehaus.mojo.exec.ExecJavaMojo.doMain(ExecJavaMojo.java:371)
+org.codehaus.mojo.exec.ExecJavaMojo.doExec(ExecJavaMojo.java:360)
+org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:280)
+java.base/java.lang.Thread.run(Thread.java:1447)
+ 
+--------------------------------------------------
+ 
+[2025-06-12 16:25:59] Failed to find item in inventory
+Exception: Could not find item with ID: 555
+Stacktrace:
+se.kth.iv1350.ermia.model.Sale.addItemById(Sale.java:48)
+se.kth.iv1350.ermia.controller.Controller.addItem(Controller.java:69)
+se.kth.iv1350.ermia.view.View.addItemToSale(View.java:89)
+se.kth.iv1350.ermia.view.View.runSecondSale(View.java:71)
+se.kth.iv1350.ermia.view.View.runMultipleSales(View.java:39)
+se.kth.iv1350.ermia.view.View.runSample(View.java:31)
+se.kth.iv1350.ermia.startUp.Main.main(Main.java:29)
+org.codehaus.mojo.exec.ExecJavaMojo.doMain(ExecJavaMojo.java:371)
+org.codehaus.mojo.exec.ExecJavaMojo.doExec(ExecJavaMojo.java:360)
+org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:280)
+java.base/java.lang.Thread.run(Thread.java:1447)
+ 
+--------------------------------------------------

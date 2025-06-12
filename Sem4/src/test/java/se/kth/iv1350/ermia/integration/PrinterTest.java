@@ -1,21 +1,20 @@
 package se.kth.iv1350.ermia.integration;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import se.kth.iv1350.ermia.model.Item;
 import se.kth.iv1350.ermia.model.Receipt;
 import se.kth.iv1350.ermia.model.dto.ItemDTO;
 import se.kth.iv1350.ermia.model.dto.ReceiptDTO;
 import se.kth.iv1350.ermia.model.dto.SaleDTO;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PrinterTest {
     private Printer printer;
@@ -30,8 +29,6 @@ class PrinterTest {
         PrintStream inMemSysOut = new PrintStream(inMemPrintOut);
         originalSysOut = System.out;
         System.setOut(inMemSysOut);
-
-        // Initialize the test receipt
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item(new ItemDTO(100, 0.25, "Milk", "A carton of milk weighing 1.5 kg", 15), 2));
 

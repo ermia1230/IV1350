@@ -62,14 +62,9 @@ public class View {
     }
 
     private void displaySaleInfo(SaleDTO saleInfo, int itemId, int quantity) {
-        // Display information about the added item
         System.out.println("Item added successfully.");
-        
-        // Display updated running total
         System.out.printf("Running total: $%.2f (VAT: $%.2f)\n", 
                          saleInfo.totalPrice(), saleInfo.totalVATAmount());
-        
-        // Could display more details about the sale if needed
         System.out.printf("Items in cart: %d\n", saleInfo.itemList().size());
     }
 

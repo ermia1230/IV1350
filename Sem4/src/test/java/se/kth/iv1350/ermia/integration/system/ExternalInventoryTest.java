@@ -1,15 +1,19 @@
 package se.kth.iv1350.ermia.integration.system;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import se.kth.iv1350.ermia.model.Item;
-import se.kth.iv1350.ermia.model.dto.ItemDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import se.kth.iv1350.ermia.integration.exception.DatabaseConException;
+import se.kth.iv1350.ermia.model.Item;
+import se.kth.iv1350.ermia.model.dto.ItemDTO;
 
 class ExternalInventoryTest {
     private ExternalInventory externalInventory;
@@ -24,7 +28,7 @@ class ExternalInventoryTest {
     }
 
     @Test
-    void fetchItemFound() {
+    void fetchItemFound() throws DatabaseConException {
         int itemId = 100;
         ItemDTO itemDTO = externalInventory.fetchItem(itemId);
         assertNotNull(itemDTO, "Item should be found in the inventory");
@@ -33,22 +37,27 @@ class ExternalInventoryTest {
     }
 
     @Test
-    void fetchItemNotFound() {
-        int nonExistentItemId = 999;
+    void fetchItemNotFound() throws DatabaseConException {
+        int nonExistentItemId = 123; 
         ItemDTO itemDTO = externalInventory.fetchItem(nonExistentItemId);
         assertNull(itemDTO, "Item should not be found in the inventory");
     }
 
     @Test
-    void updateInventory() {
+    void updateInventory() throws DatabaseConException {
         List<Item> itemsInSale = new ArrayList<>();
         int quantity = 2;
         itemsInSale.add(new Item(new ItemDTO(100, 0.25, "Milk",
                 "A carton of milk weighing 1.5 kg", 15), quantity));
+                
+        int initialQuantity = getItemQuantity(externalInventory.fetchItem(100));
+        
         externalInventory.updateInventory(itemsInSale);
-        ItemDTO milkDTO = externalInventory.fetchItem(100);
-        int expectedMilkQuantity = getItemQuantity(milkDTO) - quantity;
-        assertEquals(expectedMilkQuantity, expectedMilkQuantity,
+        
+        int actualQuantity = getItemQuantity(externalInventory.fetchItem(100));
+        int expectedQuantity = initialQuantity - quantity;
+        
+        assertEquals(expectedQuantity, actualQuantity,
                 "Quantity of Milk should be updated correctly");
     }
     private int getItemQuantity(ItemDTO itemDTO) {
@@ -58,5 +67,34 @@ class ExternalInventoryTest {
             }
         }
         return -1;
+    }
+
+    @Test
+    void fetchItemDatabaseConnectionError() {
+        int errorTriggeringId = 999;
+        
+        try {
+            externalInventory.fetchItem(errorTriggeringId);
+            fail("Expected DatabaseConException was not thrown");
+        } catch (DatabaseConException exception) {
+            String expectedMessage = "Could not connect to inventory database";
+            String actualMessage = exception.getMessage();
+            assertEquals(expectedMessage, actualMessage,
+                    "Exception message should match expected format");
+        } catch (Exception e) {
+            fail("Wrong exception type thrown: " + e.getClass().getName());
+        }
+    }
+
+    @Test
+    void fetchItemSuccessfulNoException() {
+        int validItemId = 100;
+
+        try {
+            ItemDTO result = externalInventory.fetchItem(validItemId);
+            assertNotNull(result, "Should return a valid ItemDTO for existing item");
+        } catch (Exception e) {
+            fail("No exception should be thrown for valid item ID, but got: " + e.getMessage());
+        }
     }
 }
